@@ -71,7 +71,7 @@
 
 ![](./img/route-2.png)
 
-![](D:\笔记\img\route-1.png)
+![](./img/route-1.png)
 
 > tp5.1 中 use think\Route报错，不使用时没有提示，可以注释掉
 >
@@ -83,11 +83,11 @@ facade 用处：不用实例化就可以调用类的方法
  
 ```
 
-![](./img\使用门面.png)
+![](./img/使用门面.png)
 
 
 
-![](./img\使用门面-1.png)
+![](./img/使用门面-1.png)
 
 
 
