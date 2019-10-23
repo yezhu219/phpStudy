@@ -65,11 +65,11 @@
 
      - url 重写后访问：域名/模块名/控制器名/方法名
 
-![](.\img\url.png)
+![](./img/url.png)
 
    	3.  路由配置问题
 
-![](D:\笔记\img\route-2.png)
+![](./img/route-2.png)
 
 ![](D:\笔记\img\route-1.png)
 
