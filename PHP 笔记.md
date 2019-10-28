@@ -58,7 +58,7 @@
        
          RewriteCond %{REQUEST_FILENAME} !-d
          RewriteCond %{REQUEST_FILENAME} !-f
-        // RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L] php5.7以上版本会报No input file specified.
+        // RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]  // php5.7以上版本会报No input file specified.
          RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]  //使用此方法
        </IfModule>
        ```
@@ -126,7 +126,7 @@ facade 用处：不用实例化就可以调用类的方法
 
 ```php
 Request::param('name')  //获取name值
-Request::parm()         //获取所有传参
+Request::param()         //获取所有传参
 ```
 
 2. 通过get，post获取
@@ -135,15 +135,150 @@ Request::parm()         //获取所有传参
 Request::get('name')   //获取name值
 Request::get()         //获取get请求所有参数
 
+    
+//http://www.cater.com/api/v1/postAddOne  
+//Route::post('api/:version/postAddOne','api/:version.demo/postAddOne');    
 Request::post('name')
-Request::post()
+Request::post()         //
+Request::post(false)    //  {"name": "same", "age": "19", "sex": "女"}
 ```
 
-3. only获取请求参数中指定参数
+3. only、except获取请求参数中指定参数
 
 ```php
 Request::only('name')  //获取name值
 Request::only(['name','age'])  //只获取name及age值
 Request::only('name,age')      //同上   
+
+// 设置默认值
+Request::only(['id'=>0,'name'=>'']);   
+
+Request:except('name,id') //排除name,id参数
+Request:except(['name','id'])    //排除name,id参数
 ```
+
+4. 使用助手函数
+
+```php
+//判断变量是否定义
+input('?get.id');   //get请求是是否有id
+input('?post.name');
+
+input('param.name'); // 获取单个参数
+input('param.'); // 获取全部参数
+// 下面是等效的
+input('name'); 
+input('');
+
+
+//使用过滤方法
+input('get.name','','htmlspecialchars'); // 获取get变量 并用htmlspecialchars函数过滤
+
+//使用变量修饰符
+input('get.id/d');
+input('post.name/s');
+
+```
+
+
+
+### 4.5 模型使用
+
+1. 模型文件名与数据库表明对应
+
+> ​	user表匹配时会忽略前缀  如user会匹配 think_user
+>
+> ​	userType 会匹配 think_user_type
+
+2. 模型中使用增删改查
+
+   2.1 增加数据
+
+   ```php
+   //route
+   Route::get('api/:version/addOne','api/:version.demo/addOne'); //一条
+   Route::get('api/:version/addMany','api/:version.demo/addMany');//多条
+   Route::post('api/:version/postAddOne','api/:version.demo/postAddOne');//post提交
+   Route::post('api/:version/usePost','api/:version.demo/usePost');
+   
+   
+   //model/user
+   public function addOne() {
+           $res = User::Create([
+               'name'=>'lisa',
+               'age'=>'34',
+               'sex'=>'女'
+           ]);
+           return $res;
+       }
+   
+   public function addMany(){
+           $res = User::Create([
+               ['name'=>'abc', 'age'=>'30', 'sex'=>'女'],
+               ['name'=>'tiny', 'age'=>'20', 'sex'=>'男'],
+               ['name'=>'mac', 'age'=>'10', 'sex'=>'女'],
+           ]);
+           return $res;
+       }
+   
+   public function  postAddOne($data) {
+           $res = User::Create($data);
+           return $res;
+       }
+   
+   //在model中直接使用Request类，需要引入
+    public function  usePost(){
+           $data=Request::post();
+           $res=User::Create($data);
+           return $res;
+       }
+   
+   
+   //controller
+   public function addOne() {
+           $user = new User();
+           $res = $user->addOne();
+           return $res;
+       }
+   
+   public function  addMany() {
+           $user = new user();
+           $res = $user->addMany();
+           return $res;
+       }
+   //通过请求参数
+   public function  postAddOne() {
+           $user= new User();
+   //        $data = Request::only('name,age,sex');
+           $data = Request::post();
+           $res = $user->postAddOne($data);
+           return $res;
+       }
+   
+   public function  usePost() {
+           $user = new User;
+           return $user->usePost();
+       }
+   
+   //如果你通过外部提交赋值给模型，并且希望指定某些字段写入，可以使用：
+   $user = new User;
+   // post数组中只有name和email字段会写入
+   $user->allowField(['name','email'])->save($_POST);
+   ```
+
+   ![](./img/add-c.png)
+
+   ![](./img/add-model.png)
+
+   
+
+   ![](./img/add-route.png)
+
+   - 返回添加的数据
+
+     
+
+   
+
+   
 
