@@ -67,7 +67,7 @@
 
 ![](./img/url.png)
 
-   	3.  路由配置问题
+### 4.2 路由配置问题
 
 ![](./img/route-2.png)
 
@@ -75,7 +75,7 @@
 
 > tp5.1 中 use think\Route报错，不使用时没有提示，可以注释掉
 >
-> 如果想用提示，怎use think\facade\Route
+> 如果想用提示，use think\facade\Route
 
 ```
 facade 用处：不用实例化就可以调用类的方法
@@ -94,14 +94,56 @@ facade 用处：不用实例化就可以调用类的方法
 
 
 
-![](./img\不使用门面.png)
+![](./img/不使用门面.png)
 
 
 
 
 
-![](./img\不使用门面-1.png)
+![](./img/不使用门面-1.png)
 
 
 
 > 使用门面与不使用门面获取的参数有差异
+
+
+
+### 4.3 路由版本
+
+- 目录结构 application/api/controller/v1  
+
+![](./img/version.png)
+
+- 定义路由规则
+
+  ![](./img/route-version.png)
+
+### 4.4  路由参数
+
+获取路由参数
+
+1. 通过param获取
+
+```php
+Request::param('name')  //获取name值
+Request::parm()         //获取所有传参
+```
+
+2. 通过get，post获取
+
+```php
+Request::get('name')   //获取name值
+Request::get()         //获取get请求所有参数
+
+Request::post('name')
+Request::post()
+```
+
+3. only获取请求参数中指定参数
+
+```php
+Request::only('name')  //获取name值
+Request::only(['name','age'])  //只获取name及age值
+Request::only('name,age')      //同上   
+```
+
