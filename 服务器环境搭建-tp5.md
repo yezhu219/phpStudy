@@ -355,3 +355,11 @@ vim /etc/httpd/conf/httpd.conf  //打开httpd.conf配置文件
 >   `yum install php72w-mysqlnd.x86_64`
 
 3. 线上环境注意更换数据库地址及名称
+
+
+
+4.  mkdir(): Permission denied in /var/www/html/cater/thinkphp/library/think/log/driver/File.php:61报错
+
+   >  创建文件夹失败，runtime权限不够
+   >
+   > 解决方法：进入项目根目录，输入命令：chmod -R 777 runtime

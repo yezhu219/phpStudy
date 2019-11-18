@@ -116,7 +116,14 @@ facade 用处：不用实例化就可以调用类的方法
 
 - 定义路由规则
 
+  
+  
   ![](./img/route-version.png)
+
+> 注意：
+> 控制器名必须大写，路由中小写，否则报错控制器不存在
+>
+> ![](./img/lowercase.png)
 
 ### 4.4  路由参数
 
@@ -278,7 +285,19 @@ input('post.name/s');
 
      
 
-   
+  ### 4.6  开启自动时间戳
 
-   
+-  全局开启：配置database中auto_timestamp为ture
+
+  > auto_timestamp 值：默认为int类型，可以选datetime
+
+   配置写在model中
+
+```php
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+	// 定义时间戳字段名
+    protected $createTime = 'create_at';
+    protected $updateTime = 'update_at';
+```
 
