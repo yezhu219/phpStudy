@@ -301,3 +301,12 @@ input('post.name/s');
     protected $updateTime = 'update_at';
 ```
 
+### 4.7 配置跨域
+
+- 新建behavior文件夹，新建cros类,配置请求头，过滤option请求
+
+  ![](./img/cors.png)
+  
+- 在tag中应用cros类
+
+  ![](./img/cros-tag.png)
