@@ -305,8 +305,27 @@ input('post.name/s');
 
 - 新建behavior文件夹，新建cros类,配置请求头，过滤option请求
 
+  > 图片appInit方法中&符号要去掉
+  
   ![](./img/cors.png)
   
 - 在tag中应用cros类
 
   ![](./img/cros-tag.png)
+
+### 4.8 模型使用注意事项
+
+1. save是实例方法，不能直接在model中使用
+2.  使用create及save会自动创建时间戳
+
+
+
+
+
+### 4.9   报错：Data too long for column 'content' at row 1 
+
+> 报错： String data, right truncated: 1406 Data too long for column 'content' at row 1
+
+设置 content字段为 longtext 解决。
+
+![](./img/size.png)
