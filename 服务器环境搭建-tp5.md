@@ -342,24 +342,44 @@ vim /etc/httpd/conf/httpd.conf  //打开httpd.conf配置文件
 
 ### 4. 问题记录
 
-1. Class 'PDO' not found 
+#### 1. Class 'PDO' not found 
 
 > Class 'PDO' not found就是缺少pdo扩展  `yum install php72w-pdo.x86_64` 
 >
 > 注意对应版本
 
-2. could not find driver
+#### 2. could not find driver
 
 > 因为PHP7没有pdo_mysql扩展 安装上即可
 >
 >   `yum install php72w-mysqlnd.x86_64`
 
-3. 线上环境注意更换数据库地址及名称
+#### 3. 线上环境注意更换数据库地址及名称
 
 
 
-4.  mkdir(): Permission denied in /var/www/html/cater/thinkphp/library/think/log/driver/File.php:61报错
+#### 4.  mkdir(): Permission denied in /var/www/html/cater/thinkphp/library/think/log/driver/File.php:61报错
 
    >  创建文件夹失败，runtime权限不够
    >
    > 解决方法：进入项目根目录，输入命令：chmod -R 777 runtime
+
+#### 5. vue项目打包后只能通过首页一步步访问，其他页面刷新404
+
+> 由于路由中使用history模式，需要配置apache
+
+```php
+// 1. 在项目跟目录新建.htaccess文件
+// 2.复制一下内容
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
+![](./img/history.png)
+
